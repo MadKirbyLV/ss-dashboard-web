@@ -1,11 +1,13 @@
 import './InsurancePolicies.css'
 import { useState } from 'react'
 import Chip from '../components/Chip'
+import React from 'react'
 
 function InsurancePolicies() {
-  const [policies] = useState(
+  const [policies, setPolicies] = useState(
     [
       {
+        id: 1,
         icon: 'plane',
         type: { name: 'Travel', details: 'Europe, 1 person'},
         date: { start: '2019-04-20', end: '2020-04-21'},
@@ -13,6 +15,7 @@ function InsurancePolicies() {
         action: { name: 'Fill a claim' }
       },
       {
+        id: 2,
         icon: 'home',
         type: { name: 'Private property', details: 'Zigfrīda Annas Meirovica bulvāris 10-0, Rīga'},
         date: { start: '2019-01-06', end: '2020-01-06'},
@@ -20,6 +23,7 @@ function InsurancePolicies() {
         action: { name: 'Pay', amount: '24,49', currency: '€' }
       },
       {
+        id: 3,
         icon: 'car',
         type: { name: 'KASKO', details: 'Volvo XS60, FF-4224'},
         date: { start: '2018-05-12', end: '2019-05-12'},
@@ -27,6 +31,7 @@ function InsurancePolicies() {
         action: { name: 'Renew' }
       },
       {
+        id: 4,
         icon: 'cat',
         type: { name: 'PET', details: 'Muris'},
         date: { start: '2019-05-12', end: '2019-05-12'},
@@ -34,6 +39,7 @@ function InsurancePolicies() {
         action: { name: 'Fill a claim' }
       },
       {
+        id: 5,
         icon: 'health',
         type: { name: 'Health', details: 'Jānis Bērziņš, 010167-041258'},
         date: { start: '2019-05-12', end: '2020-05-12'},
@@ -41,6 +47,7 @@ function InsurancePolicies() {
         action: { name: 'Fill a claim' }
       },
       {
+        id: 6,
         icon: 'smarthphone',
         type: { name: 'Smartphone', details: 'Samsung Galaxy S10'},
         date: { start: '2019-05-12', end: '2012-12-31'},
@@ -50,6 +57,7 @@ function InsurancePolicies() {
     ]
   )
   const [showAll, setShowAll] = useState(false)
+  const [policyInEdit, setPolicyInEdit] = useState(null)
 
   function customFormatDate (dateString) {
     const options = {
@@ -66,23 +74,48 @@ function InsurancePolicies() {
       return policies.filter((p, i) => i < 4)
     }
   }
+  function handlEditName (id, e) {
+    const newPolicies = [...policies]
+    const policyToEdit = policies.find(p => p.id === id)
+    policyToEdit.type.details = e.target.value
+    setPolicies(newPolicies)
+    return newPolicies
+  }
+  function handlePressEnter (e) {
+    if (e.key === 'Enter') {
+      setPolicyInEdit(null)
+    }
+  }
 
   return (
     <div className="policy-wrapper">
-      <h1 className="if heading medium font weight-126" style={{marginLeft: '12px'}}>Insurance Policies</h1>
+      <h1 className="if heading medium font weight-126 heading-custom">Insurance Policies</h1>
 
       <table className="if table table-header-border">
         <tbody className="if">
 
-          { getInsurancePolicies().map((p, i) => 
-            <tr className="if" key={i}>
+          { getInsurancePolicies() && getInsurancePolicies().map((p, i) => 
+            <tr className="if" key={i} data-testid='policy'>
               <td className="if" style={{width: '68px', paddingRight: 0}}>
                 <div className={'if icon product policy-icon ' + p.icon} />
               </td>
 
               <td className="if" style={{width: '450px'}}>
                 <div className="if font weight-126">{p.type.name}</div>
-                <div>{p.type.details}</div>
+                <div>
+                  { policyInEdit === p.id && (
+                    <React.Fragment>
+                      <input type="text" placeholder="Enter policy name" className="if text input-custom" value={p.type.details} onChange={(e) => handlEditName(p.id, e)} onKeyUp={handlePressEnter} />
+                      <button className="if button icon ui check edit-custom" onClick={()=>{setPolicyInEdit(null)}}></button>
+                    </React.Fragment>
+                  ) || (
+                    <React.Fragment>
+                      <span>{p.type.details}</span> 
+                      <button className="if button icon ui edit edit-custom" onClick={()=>{setPolicyInEdit(p.id)}}></button>
+                    </React.Fragment>
+                  )}
+                </div>
+
               </td>
 
               <td className="if" style={{width: '200px'}}>
@@ -105,7 +138,7 @@ function InsurancePolicies() {
         </tbody>
       </table>
   
-      { !showAll && <button className="if button text" onClick={() => {setShowAll(!showAll)}}>See 2 more</button>}
+      { !showAll && <button id="show-all-button" className="if button text show-all-custom" onClick={() => {setShowAll(!showAll)}}>See 2 more</button>}
     </div>
   )
 }

@@ -17,11 +17,12 @@ button {
 .main {
   background-color: #f6f3f0;
 }
-.primary-custom, .secondary-custom {
-  background-color: #f6f3f0 !important;
-}
+
 
 @media only screen and (min-width: 960px) {
+  .primary-custom, .secondary-custom {
+    background-color: #f6f3f0 !important;
+  }
   .primary-custom {
     height: 2.5rem !important;
   }
