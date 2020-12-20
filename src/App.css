@@ -1,38 +1,63 @@
-.App {
+*:focus, *:focus-within {
+  outline: none !important;
+}
+
+button {
+  border: none !important;
+}
+
+.if.desktop-menu-action {
+  overflow: visible !important;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.main {
+  background-color: #f6f3f0;
+}
+.primary-custom, .secondary-custom {
+  background-color: #f6f3f0 !important;
+}
+
+@media only screen and (min-width: 960px) {
+  .primary-custom {
+    height: 2.5rem !important;
+  }
+  .primary-custom .button {
+    height: 2.5rem !important;
+    position: absolute;
+    right: 0
+  }
+}
+
+.secondary-custom div.container {
+  background-color: #faf9f7 !important;
+  padding: 0 12rem 0 6rem;
+  margin: auto !important;
+  min-width: 80% !important;
+}
+
+.icon-custom {
+  background-size: 4rem 4rem !important;
+  height: 4rem !important;
+  width: 4rem !important;
+}
+
+.badge-custom {
+  color: #faf9f7;
+  background-color:#cf1c1c;
+  border-radius: 16px;
+  border: 1px solid #cf1c1c;
+  height: 14px;
+  width: 14px;
+  line-height: 14px;
+  font-size: 12px;
   text-align: center;
+  position: relative;
+  left: 2px;
+  bottom: 2px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
